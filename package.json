@@ -1,6 +1,10 @@
 {
   "name": "market",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.15.4",
+    "npm": "7.19.0"
+  },
   "description": "A market app where users can buy goods.",
   "main": "index.js",
   "scripts": {
