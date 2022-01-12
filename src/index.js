@@ -1,5 +1,15 @@
+import "regenerator-runtime/runtime.js";
+
 import ReactDOM from "react-dom";
 import React from "react";
-import { App } from "./components/App";
+import { Provider } from "react-redux";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+import App from "./components/App";
+import store from "./store";
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);

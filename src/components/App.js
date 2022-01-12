@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+// import { bindActionCreators } from "redux";
+// import { connect } from "react-redux";
 import { AppWrapper, ContentWrapper } from "./App.styles";
 import Header from "./Header/Header";
 import Products from "./Products/Products";
@@ -7,6 +9,7 @@ import Filtering from "./Filtering/Filtering";
 
 import "./app.css";
 import Title from "./Title/Title";
+import { requestApiItems } from "../actions";
 
 const sortingItems = [
   {
@@ -278,7 +281,12 @@ const tags = products.reduce((acc, { tags }) => {
 }, []);
 console.log(tags);
 
-const App = () => {
+const App = (props) => {
+  // useEffect(() => {
+  //   props.requestApiItems();
+  // }, []);
+
+  // console.log(props.items);
   return (
     <AppWrapper>
       <Header />
@@ -294,6 +302,11 @@ const App = () => {
             title="Brands"
           />
           <Filtering
+            // @todo clicking on one of the items will call the API.
+            // here we need to throttle the request for 3 seconds.
+            /*
+            unrelated: set brands and tags when the App component mounts
+            */
             items={brands.map((brand) => ({
               slug: brand.slug,
               name: brand.name,
@@ -312,4 +325,12 @@ const App = () => {
   );
 };
 
-export { App };
+// const mapStateToProps = (state) => ({
+//   items: state.items,
+// });
+// const mapDispatchToProps = (dispatch) =>
+//   bindActionCreators({ requestApiItems }, dispatch);
+
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+export default App;
