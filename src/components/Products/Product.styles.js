@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const ProductsPageWrapper = styled.div`
+  padding: 10px;
+  max-width: 596px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -9,15 +11,15 @@ export const ProductsPageWrapper = styled.div`
   box-shadow: 0px 4px 24px rgb(93 62 188 / 4%);
   font-size: 14px;
   // margin: 16px;
-  // justify-content: center;
-  justify-content: flex-start;
+  justify-content: center;
+  // justify-content: flex-start;
 `;
 
 export const ProductItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 24px;
+  margin: 10px;
   width: 124px;
   height: 225px;
 `;

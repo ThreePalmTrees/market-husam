@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { BasketWrapper, BasketIcon } from "./Basket.styles";
+import {
+  BasketWrapper,
+  BasketIcon,
+  BasketItemsWrapper,
+  BasketItem,
+  ItemControls,
+  IncrementDecrementButton,
+  ItemCount,
+} from "./Basket.styles";
 
 const items = [1, 2, 3];
 
@@ -22,75 +30,25 @@ const Basket = ({ totalAmount }) => {
         <p>Basket</p>
       )}
       {isOpen && (
-        <div
-          style={{
-            position: "absolute",
-            top: "calc(100% + 40px)",
-            right: "0",
-            color: "#000",
-            background: "#fff",
-            border: "6px solid #1ea4ce",
-            minHeight: "321px",
-            minWidth: "280px",
-            padding: "26px",
-          }}
-        >
-          {/* items.map(item => render item ...) */}
-          {items.map((item) => (
-            <div
-              style={{
-                display: "flex",
-                textAlign: "left",
-                justifyContent: "space-between",
-                marginBottom: "35px",
-              }}
-            >
+        <BasketItemsWrapper>
+          {items.map((item, i) => (
+            <BasketItem key={`${item.name}-${i}`}>
               <div>
                 <p>PRODUCT NAME</p>
                 <p>PRICE</p>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <p
-                  style={{
-                    color: "#1EA4CE",
-                    marginRight: "11px",
-                    fontSize: "30px",
-                  }}
-                >
+              <ItemControls>
+                <IncrementDecrementButton placement="left">
                   -
-                </p>
-                <p
-                  style={{
-                    background: "#1EA4CE",
-                    color: "#fff",
-                    width: "32px",
-                    height: "32px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  1
-                </p>
-                <p
-                  style={{
-                    color: "#1EA4CE",
-                    marginLeft: "11px",
-                    fontSize: "30px",
-                  }}
-                >
+                </IncrementDecrementButton>
+                <ItemCount>1</ItemCount>
+                <IncrementDecrementButton placement="right">
                   +
-                </p>
-              </div>
-            </div>
+                </IncrementDecrementButton>
+              </ItemControls>
+            </BasketItem>
           ))}
-        </div>
+        </BasketItemsWrapper>
       )}
     </BasketWrapper>
   );

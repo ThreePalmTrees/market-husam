@@ -9,3 +9,9 @@ export const ContentWrapper = styled.div`
   justify-content: center;
   padding: 38px 104px;
 `;
+
+export const ProductsWrapper = styled.div`
+  margin: 0 16px;
+  max-width: calc(688px + 32px);
+  min-width: 310px;
+`;

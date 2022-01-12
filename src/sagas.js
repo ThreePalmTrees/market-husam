@@ -8,35 +8,29 @@ import {
 } from "./actions";
 import { fetchItems, fetchCompanies } from "./api";
 
-// move to ./utils
-const addParam = (param, params) => {
-  if (!params) {
-    params += param;
-  } else {
-    params += `&${param}`;
-  }
-};
-
 function* getApiItems({ action }) {
+  console.log("calling getApiItems");
+  console.log(action);
   try {
     // do api call
-    let params = "";
+    const params = [];
     if (action?.payload?.sort) {
       switch (action.payload.sort.type) {
         // @todo: This approach is error-prone and not DRY. Wouldn't use this usually, but I'm racing time.
+        // @todo: if any time left, allow sorting both price AND date "?_sort=price,added&_order=asc,asc" (need to change radio to checkbox)
         case "asc":
           if (action.payload.sort.by === "price") {
-            addParam("_sort=price&_order=asc", params);
+            params.push("_sort=price&_order=asc");
           } else if (action.payload.sort.by === "date") {
-            addParam("_sort=date&_order=asc", params);
+            params.push("_sort=added&_order=asc");
           }
           break;
 
         case "desc":
           if (action.payload.sort.by === "price") {
-            addParam("_sort=price&_order=desc", params);
+            params.push("_sort=price&_order=desc");
           } else if (action.payload.sort.by === "date") {
-            addParam("_sort=date&_order=desc", params);
+            params.push("_sort=added&_order=desc");
           }
           break;
 
@@ -47,12 +41,15 @@ function* getApiItems({ action }) {
 
     if (action?.payload?.filterByBrands) {
       const brands = action.payload.filterByBrands.join("|");
-      addParam(`manufacturer_like=${brands}`, params);
+      params.push(`manufacturer_like=${brands}`);
     }
 
-    const items = yield call(() => fetchItems(params));
+    // hack: to remove this if pagination was implemented on time
+    params.push("_page=1&_limit=16");
 
-    // @todo: set available tags properly
+    const items = yield call(() => fetchItems(params.join("&")));
+
+    // @todo: set available tags properly (extract to a new saga)
     const tags = items.reduce((acc, { tags }) => {
       tags.forEach((tag) => {
         if (!acc.includes(tag)) {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Sorting from "../Sorting/Sorting";
 import Title from "../Title/Title";
 import {
@@ -130,7 +131,7 @@ import { connect } from "react-redux";
 
 const Products = ({ items, requestApiItems }) => {
   /** State
-   * ""mug "shirt" thing
+   * "mug" | "shirt" filter
    * sorting
    * selected brands
    * selected tags
@@ -140,32 +141,32 @@ const Products = ({ items, requestApiItems }) => {
     requestApiItems();
   }, []);
 
+  // const _items = useSelector((state) => state.items);
+
   // Clicking "Add" on product adds it to the basket, or increments if already existing.
 
   return (
-    <ProductsPageWrapper>
-      {/* <Title size="large" style={{ width: "100%" }}>
-        Products // shouldn't be part of the Products component
-      </Title> */}
-      {items &&
-        items.map((item, i) => (
-          <ProductItem key={`${item.name}-${i}`}>
-            <ProductImageWrapper>
-              {/* <ProductImage
-                src={`https://picsum.photos/200?sig=${i}`}
-                alt={item.name}
-              /> */}
-              {/* TODO: remove this line 👇 */}
-              <ProductImage src={``} alt={item.name} />{" "}
-            </ProductImageWrapper>
-            <ProductPrice>
-              ₺ <span>{item.price}</span>
-            </ProductPrice>
-            <ProductName>{item.name}</ProductName>
-            <AddProductButton>Add</AddProductButton>
-          </ProductItem>
-        ))}
-    </ProductsPageWrapper>
+    <>
+      <Title size="large" text="Products" style={{ width: "100%" }} />
+      <ProductsPageWrapper>
+        {items &&
+          items.map((item, i) => (
+            <ProductItem key={`${item.name}-${i}`}>
+              <ProductImageWrapper>
+                <ProductImage
+                  src={`https://picsum.photos/200?sig=${i}`}
+                  alt={item.name}
+                />
+              </ProductImageWrapper>
+              <ProductPrice>
+                ₺ <span>{item.price}</span>
+              </ProductPrice>
+              <ProductName>{item.name}</ProductName>
+              <AddProductButton>Add</AddProductButton>
+            </ProductItem>
+          ))}
+      </ProductsPageWrapper>
+    </>
   );
 };
 

@@ -1,7 +1,11 @@
+/**@TODO
+ * set brands and tags when the App component mounts
+ * throttle API calls by 3 seconds (sorting & filtering). pagination will have data available, so no calls to the API.
+ */
 import React, { useEffect } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { AppWrapper, ContentWrapper } from "./App.styles";
+import { AppWrapper, ContentWrapper, ProductsWrapper } from "./App.styles";
 import Header from "./Header/Header";
 import Products from "./Products/Products";
 import Sorting from "./Sorting/Sorting";
@@ -9,37 +13,48 @@ import Filtering from "./Filtering/Filtering";
 
 import "./app.css";
 import Title from "./Title/Title";
-import { requestApiCompanies } from "../actions";
-
-const sortingItems = [
-  {
-    text: "Price low to high",
-    action: () => console.log("1"),
-  },
-  {
-    text: "Price high to low",
-    action: () => console.log("2"),
-  },
-  {
-    text: "New to old",
-    action: () => console.log("3"),
-  },
-  {
-    text: "Old to new",
-    action: () => console.log("4"),
-  },
-];
+import { requestApiItems, requestApiCompanies } from "../actions";
 
 const App = (props) => {
   useEffect(() => {
     props.requestApiCompanies();
   }, []);
 
-  // console.log(props.items);
+  // sortingItems are passed to <Sorting /> to avoid hardcoding the sorting options inside the component
+  const sortingItems = [
+    {
+      text: "Price low to high",
+      action: () =>
+        props.requestApiItems({
+          payload: { sort: { by: "price", type: "asc" } },
+        }),
+    },
+    {
+      text: "Price high to low",
+      action: () =>
+        props.requestApiItems({
+          payload: { sort: { by: "price", type: "desc" } },
+        }),
+    },
+    {
+      text: "New to old",
+      action: () =>
+        props.requestApiItems({
+          payload: { sort: { by: "date", type: "desc" } },
+        }),
+    },
+    {
+      text: "Old to new",
+      action: () =>
+        props.requestApiItems({
+          payload: { sort: { by: "date", type: "asc" } },
+        }),
+    },
+  ];
+
   return (
     <AppWrapper>
       <Header />
-      {/* Products > Sorting + Filtering + results (w/ pagination) */}
       <ContentWrapper>
         <div>
           <Sorting items={sortingItems} selectedItem={sortingItems[0].text} />
@@ -51,11 +66,6 @@ const App = (props) => {
             title="Brands"
           />
           <Filtering
-            // @todo clicking on one of the items will call the API.
-            // here we need to throttle the request for 3 seconds.
-            /*
-            unrelated: set brands and tags when the App component mounts
-            */
             items={[].map((brand) => ({
               slug: brand.slug,
               name: brand.name,
@@ -63,11 +73,9 @@ const App = (props) => {
             title="Tags"
           />
         </div>
-        <div style={{ margin: "0 16px", maxWidth: "688px" }}>
-          {/* not really 688, use calc and fix margins*/}
-          <Title size="large" text="Products" style={{ width: "100%" }} />
+        <ProductsWrapper>
           <Products />
-        </div>
+        </ProductsWrapper>
       </ContentWrapper>
       {/* Footer */}
     </AppWrapper>
@@ -78,6 +86,6 @@ const mapStateToProps = (state) => ({
   companies: state.companies,
 });
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ requestApiCompanies }, dispatch);
+  bindActionCreators({ requestApiItems, requestApiCompanies }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
