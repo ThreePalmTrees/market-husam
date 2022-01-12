@@ -37,11 +37,11 @@ const Filtering = ({ items, selected, title }) => {
             position: "relative",
           }}
         >
-          <input type="checkbox" checked id={`all-${title}`} />
+          <input type="checkbox" id={`all-${title}`} />
           <label htmlFor={`all-${title}`}>All</label> ({items.length})
-          {items.map((item) => (
-            <div key={item.text} style={{ marginBottom: "18px" }}>
-              <input type="checkbox" checked id={item.slug} />
+          {items.map((item, i) => (
+            <div key={`${item.name}-${i}`} style={{ marginBottom: "18px" }}>
+              <input type="checkbox" id={item.slug} data-slug={item.slug} />
               <label htmlFor={item.slug}>{item.name}</label>
             </div>
           ))}

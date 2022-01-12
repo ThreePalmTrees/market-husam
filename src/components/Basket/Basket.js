@@ -4,7 +4,7 @@ import { BasketWrapper, BasketIcon } from "./Basket.styles";
 const items = [1, 2, 3];
 
 const Basket = ({ totalAmount }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <BasketWrapper
       isOpen={isOpen}

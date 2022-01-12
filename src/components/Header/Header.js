@@ -8,7 +8,7 @@ const Header = () => {
       {/* @todo: css: tablet view: display logo on the left */}
       <Logo>market</Logo>
       {/* @todo: css: tablet view: less margin-right / right for basket */}
-      <Basket isOpen={true} totalAmount={123.45} />
+      <Basket totalAmount={123.45} />
     </HeaderBanner>
   );
 };

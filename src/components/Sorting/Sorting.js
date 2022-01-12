@@ -19,7 +19,7 @@ const Sorting = ({ items, selectedItem }) => {
                 id={itemId}
                 checked={sortingRule === item.text}
                 name="sorting"
-                onChange={() => setSortingRule(item.text)}
+                onChange={() => setSortingRule(item.text)} // @todo: requestApiItems({ payload: { sort: { by: "date", type: "desc" } } })
               />
               <label htmlFor={itemId}> {item.text}</label>
             </div>

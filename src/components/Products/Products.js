@@ -149,7 +149,7 @@ const Products = ({ items, requestApiItems }) => {
       </Title> */}
       {items &&
         items.map((item, i) => (
-          <ProductItem key={item.name}>
+          <ProductItem key={`${item.name}-${i}`}>
             <ProductImageWrapper>
               {/* <ProductImage
                 src={`https://picsum.photos/200?sig=${i}`}
